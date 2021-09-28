@@ -1,0 +1,283 @@
+<html>
+
+<head>
+
+    <title>Generateur d'histoire aléatoires</title>
+
+    <script src="jquery-3.5.0.js"></script>
+    <script src="utils.js"></script>
+    <script>
+
+        // PARAMETERS
+        const MAX_PAGES = 2;
+
+        const SPEED_ANIM = 1;
+        const AMPLITUDE_ANIM = 1;
+
+        var page=0;
+
+        var personnages,actions,background;
+
+        var audioBackground,audioPersonnages,audioAction;
+        var image_persos,image_action,image_bg;
+
+        document.addEventListener('keydown', function(event) {
+            if(event.keyCode == 37 && page!=0) {
+                $("#button-left").click();
+            }
+            else if(event.keyCode == 39 && page!=MAX_PAGES) {
+                $("#button-right").click();
+            }
+            else if(event.keyCode == 32) {
+                $("#button-reset").click();
+            }
+        });
+
+        function switch_page(){
+            $("#button-left").prop("disabled",page==0);
+            $("#button-right").prop("disabled",page==MAX_PAGES);
+
+            $("#text-1").prop("hidden",page<0);
+            $("#text-2").prop("hidden",page<1);
+            $("#text-3").prop("hidden",page<2);
+
+            $("#text-4").prop("hidden",page<0);
+            
+
+            display(); 
+
+
+        }
+
+        function generate_story(){
+            $.getJSON( "data.json", function( data ) {
+                personnages = data.personnages[Math.floor(Math.random()*data.personnages.length)];
+                actions = data.actions[Math.floor(Math.random()*data.actions.length)];
+                background = data.backgrounds[Math.floor(Math.random()*data.backgrounds.length)];
+
+                let tmp = [personnages.name,actions.name,background.name]
+                let authors = [];
+                for(i=0;i<tmp.length;i++){
+                    author = tmp[i]; 
+                    if(!authors.includes(author)){
+                        authors.push(author)
+                    }
+                }
+
+                // TEXTE
+                $("#bg-text").text(`${background.texte}, ${personnages.perso_gauche} & ${personnages.perso_droite}.`);
+
+                $("#action-1-text").text(`${actions.action_1.texte}`.formatUnicorn({perso_gauche:personnages.perso_gauche,perso_droite:personnages.perso_droite}));
+                $("#action-2-text").text(`${actions.action_2.texte}.`.formatUnicorn({perso_gauche:personnages.perso_gauche,perso_droite:personnages.perso_droite}));
+                $("#action-3-text").text(`${actions.action_3.texte}.`.formatUnicorn({perso_gauche:personnages.perso_gauche,perso_droite:personnages.perso_droite}));
+                $("#author-text").text(`${authors.join()}`);
+                
+
+                if("son" in background){
+                    // SON arrière plan
+                    if(audioBackground != undefined){
+                        audioBackground.pause();
+                        audioBackground.currentTime = 0;
+                        audioBackground.src = "images/bg/" + background.son;
+
+                    }
+                    else{
+                        audioBackground = new Audio("images/bg/" + background.son);
+                    }
+                    audioBackground.loop = true ;
+                    audioBackground.play();
+                }
+
+                switch_page();
+            });
+        }
+
+        function display(){
+            let prefix;
+            if(page==0){
+                prefix="un";
+            }
+            if(page==1){
+                prefix="deux";
+            }
+            if(page==2){
+                prefix="trois";
+            }
+
+            var action = actions["action_"+(page+1).toString()];
+
+            // Joue son de la page si jamais
+            if(audioAction != undefined){
+                audioAction.pause();
+            }
+
+            if(audioPersonnages != undefined){
+                audioPersonnages.pause();
+            }
+
+            if("son" in action){
+                if(audioAction == undefined){
+                    audioAction = new Audio("sounds/"+action.son);
+                    audioAction.loop = false;
+                }else{
+                    audioAction.pause();
+                    audioAction.currentTime = 0;
+                    audioAction.src = "sounds/"+action.son;
+                }
+                audioAction.play();
+            }
+            
+            if("son" in personnages){
+                if(audioPersonnages == undefined){
+                    audioPersonnages = new Audio("sounds/"+personnages.son);
+                    audioPersonnages.loop = false;
+                }else{
+                    audioPersonnages.pause();
+                    audioPersonnages.currentTime = 0;
+                    audioPersonnages.src = "sounds/"+personnages.son;
+                }
+                audioPersonnages.play();
+            }
+            
+
+            //1PERSONNAGES
+            if("image" in personnages){
+            image_persos = new Image();
+            image_persos.src=`images/persos/${prefix}${personnages.image}.png`;
+            image_persos.onerror = (e)=> image_persos = undefined;
+            }else{
+                image_persos = undefined;
+            }
+
+
+            //1ACTION unaction
+            if( "image" in action){
+            image_action = new Image();
+            image_action.src=`images/actions/${action.image}.png`;
+            image_action.onerror = (e)=> image_action = undefined;
+            }else{
+                image_action = undefined;
+            }
+
+            //BACKGROUND 
+            if("image" in background){
+                image_bg = new Image();
+                image_bg.src=`images/bg/${background.image}.png`;
+                image_bg.onerror = (e)=> image_bg = undefined;
+            }else{
+                image_bg = undefined;
+            }
+
+            /*
+
+            image_persos.onload=function()
+            { draw_canvas(image_persos,image_action,image_bg);}
+
+            //1ACTION unaction loaded
+            image_action.onload=function()
+            { draw_canvas(image_persos,image_action,image_bg);}
+
+            //BACKGROUND loaded
+            image_bg.onload=function()
+            { draw_canvas(image_persos,image_action,image_bg);}
+            */
+
+        }
+
+        function tick(timestamp){
+
+            draw_canvas(timestamp);
+            requestAnimationFrame(tick);
+        }
+
+
+        /*
+        Cette fonction sert à recharger le "canvas" et va dessiner les images dessus.
+        */
+        function draw_canvas(timestamp)
+            {
+                var canvas=document.getElementById('canvas');
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                canvas.width=847;
+                canvas.height=594;
+
+                
+                if(image_bg != undefined && image_bg.complete == true){
+                //BACKGROUND loaded
+                    ctx.drawImage(
+                        image_bg,
+                        (canvas.width/2)-image_bg.width/2,
+                        (canvas.height/2)-image_bg.height/2
+                        );
+                }
+
+                if(image_persos != undefined && image_persos.complete == true){
+                //1PERSONNAGES loaded
+
+                    let dy = Math.sin(timestamp*0.004*SPEED_ANIM)*canvas.height*0.01*AMPLITUDE_ANIM;
+
+                    ctx.drawImage(
+                        image_persos,
+                        (canvas.width/2)-image_persos.width/2,
+                        ((canvas.height/2)-image_persos.height/2)+dy
+                        );
+                }
+
+                if(image_action != undefined && image_action.complete == true){
+                    //1PERSONNAGES loaded
+                    ctx.drawImage(
+                        image_action,
+                        (canvas.width/2)-image_action.width/2,
+                        (canvas.height/2)-image_action.height/2
+                        );
+                }
+            }
+
+        window.onload = function()
+        {
+            requestAnimationFrame(tick);
+            page=0;
+            generate_story();
+
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+    <div align="center">
+
+        <a-text>Generateur d'histoire aléatoires</a-text>
+    
+<button id="button-reset" onclick="window.location.reload();">Clique ici pour générer une nouvelle histoire!</button>
+<br><br>
+
+<canvas id="canvas" style="border:1px solid #000000;"></canvas>
+<br><br>
+<button id="button-left" onclick="page--;switch_page(page);">←</button>
+<button id="button-right" onclick="page++;switch_page(page);">→</button>
+
+
+<a-text id="text-1">Il était une fois <span id="bg-text">{BACKGROUND}</span> qui <span id="action-1-text">{ACTION 1}</span></a-text>  
+<br><br>
+
+<a-text id="text-2">Quand soudain <span id="action-2-text">{ACTION 2}</span></a-text>
+<br><br>
+
+<a-text id="text-3">Cependant <span id="action-3-text">{ACTION 3}</span></a-text>
+<br><br>
+
+<a-text id="text-4">Une histoire de : <span id="author-text">{prénoms}</span> </a-text>
+
+
+    </div>
+
+  
+</body>
+
+</html>

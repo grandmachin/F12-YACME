@@ -1,0 +1,294 @@
+{
+    "personnages":
+    [
+        {
+            "perso_gauche":"le requin",
+            "perso_droite":"la pieuvre",
+            "image":"perso1",
+            "son":"guga-Requin.mp3",
+            "name":"Guga"
+        },
+        {
+            "perso_gauche":"le requin",
+            "perso_droite":"la pieuvre",
+            "image":"perso1",
+            "name":"Guga",
+            "son":"guga-Pieuvre.mp3"
+        },
+        {
+            "perso_gauche":"le requin",
+            "perso_droite":"la pieuvre",
+            "image":"perso1",
+            "name":"Guga",
+            "son":"guga-Pieuvre.mp3"
+        },
+        
+        
+        
+        
+        {
+            "perso_gauche":"mon papa",
+            "perso_droite":"moi",
+            "name":"Gabriel",
+            "image":"perso2"
+            
+        },
+        {
+            "perso_gauche":"mon papa",
+            "perso_droite":"moi",
+            "name":"Gabriel",
+            "image":"perso2"
+            
+        },
+        {
+            "perso_gauche":"mon papa",
+            "perso_droite":"moi",
+            "name":"Gabriel",
+            "image":"perso2"
+            
+        },
+        
+        
+        
+        {
+            "perso_gauche":"Policier 1",
+            "perso_droite":"Policier 2",
+            "name":"Hakim",
+            "image":"perso3"
+            
+        },
+        {
+            "perso_gauche":"Policier 1",
+            "perso_droite":"Policier 2",
+            "name":"Hakim",
+            "image":"perso3"
+            
+        },
+        {
+            "perso_gauche":"Policier 1",
+            "perso_droite":"Policier 2",
+            "name":"Hakim",
+            "image":"perso3"
+            
+        },
+        
+        
+        {
+            "perso_gauche":"Sain",
+            "perso_droite":"Ray",
+            "image":"perso4",
+            "name":"Hamza",
+            "son":"hamza-Perso1.mp3"
+            
+        },
+        {
+            "perso_gauche":"Sain",
+            "perso_droite":"Ray",
+            "image":"perso4",
+            "name":"Hamza",
+            "son":"hamza-Perso2.mp3"
+            
+        },
+        {
+            "perso_gauche":"Sain",
+            "perso_droite":"Ray",
+            "image":"perso4",
+            "name":"Hamza",
+            "son":"hamza-Perso1.mp3"
+            
+        },
+        
+        
+        {
+            "perso_gauche":"Bruce",
+            "perso_droite":"Léon",
+            "name":"Ramazi",
+            "image":"perso5"
+            
+        },
+        {
+            "perso_gauche":"Bruce",
+            "perso_droite":"Léon",
+            "name":"Ramazi",
+            "image":"perso5"
+            
+        },
+        {
+            "perso_gauche":"Bruce",
+            "perso_droite":"Léon",
+            "name":"Ramazi",
+            "image":"perso5"
+            
+        },
+        
+        
+        
+        
+        {
+            "perso_gauche":"Emma",
+            "perso_droite":"Max",
+            "name":"Tekla",
+            "image":"perso6"
+            
+        },
+        {
+            "perso_gauche":"Emma",
+            "perso_droite":"Max",
+            "name":"Tekla",
+            "image":"perso6"
+            
+        },
+        {
+            "perso_gauche":"Emma",
+            "perso_droite":"Max",
+            "name":"Tekla",
+            "image":"perso6"
+            
+        }
+        
+        
+        
+        
+    ],
+    
+    
+    "backgrounds":[
+        {
+            "texte":"dans l’océan brillant ",
+            "image":"bg1",
+            "name":"Guga",
+            "son":"guga-Lieu.mp3"
+        },
+        {
+            "texte":"dans une grande ville",
+            "name":"Gabriel",
+            "image":"bg2"
+        },
+        {
+            "texte":"à Las Vegas parallèle",
+            "name":"Hakim",
+            "image":"bg3"
+        },
+        {
+            "texte":"dans un carnet",
+            "image":"bg4",
+            "name":"Hamza",
+            "son":"hamza-Lieu.mp3"
+            
+        },
+        {
+            "texte":"in the Demon Place",
+            "image":"bg5",
+            "name":"Ramazi",
+            "son":"ramazi-Lieu.mp3"
+            
+        },
+        {
+            "texte":"in the city",
+            "name":"Tekla",
+            "image":"bg6"
+        }
+    ],
+    
+    
+    
+    
+    "actions":[
+        {
+            "name":"Guga",
+            "action_1":{
+                "texte":"se baladaient"
+                
+            },
+            "action_2":{
+                "texte":"un humain voulait les taper",
+                "image":"deuxaction1",
+                "son":"guga-taper.mp3"
+            },
+            "action_3":{
+                "texte":"l’humain était une pieuvre !",
+                "image":"troisaction1"
+            }
+        },
+        
+        
+        
+        {
+                "name":"Guga",
+                "action_1":{
+                    "texte":"se baladaient"
+                },
+                "action_2":{
+                    "texte":"Ils travaillent",
+                    "image":"deuxaction2"
+                },
+                "action_3":{
+                    "texte":"ils décident de jouer",
+                    "image":"troisaction2"
+                }
+                
+            },
+            
+            
+            {
+                "name":"Guga",
+                "action_1":{
+                    "texte":"trouvèrent un serpent",
+                    "image":"unaction3",
+                    "son":"hakim-Action1.mp3"
+                },
+                "action_2":{
+                    "texte":"une bataille éclata",
+                    "image":"deuxaction3",
+                    "son":"hakim-Action2.mp3"
+                },
+                "action_3":{
+                    "texte":"ils font un barbecue avec le serpent",
+                    "image":"troisaction3",
+                    "son":"hakim-Action3.mp3"
+                }
+                
+            },
+            
+            
+            {
+                "name":"Guga",
+                "action_1":{
+                    "texte":"se retrouvaient",
+                    "image":"unaction4"
+                },
+                "action_2":{
+                    "texte":"Ils affrontèrent les monstres",
+                    "image":"deuxaction4"
+                },
+                "action_3":{
+                    "texte":"Ils gagnaient tous les combats",
+                    "image":"troisaction4"
+                }
+                
+            },
+            
+            {
+                "name":"Guga",
+                "action_1":{
+                    "texte":"are hanging out"
+                },
+                "action_2":{
+                    "texte":"they where playing"
+
+                },
+                "action_3":{
+                    "texte":"they decide to go to vacation and having fun"
+                }
+
+            }
+
+
+
+
+
+
+    ]
+
+}
+
